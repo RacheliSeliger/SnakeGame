@@ -52,23 +52,11 @@ class Snake implements IPlayer {
         }
         setLastDirection();
 
-        // Check if the snake touches the wall or itself, and Terminate the program
-        if (headX < 0 || headX >= width || headY < 0 || headY >= height || containsPositionInBoard(headX, headY)) {
-            System.out.println("Game Over!");
-            SnakeGame.isRunning = false;
-            System.exit(0);
-        }
+        checkGameOver(headX, headY);
 
-        // Update the positions of the snake's body
-        for (int i = length - 1; i > 0; i--) {
-            BodyPart currentPart = body.get(i);
-            BodyPart previousPart = body.get(i - 1);
-            currentPart.setX(previousPart.getX());
-            currentPart.setY(previousPart.getY());
-        }
+        updateSnakeBody();
 
-        body.get(0).setX(headX);
-        body.get(0).setY(headY);
+        updateSnakeHead(headX, headY);
     }
 
     public void setLastDirection() {
@@ -103,5 +91,26 @@ class Snake implements IPlayer {
      public boolean isValidDirection(String newDirection) {
         return newDirection.equals("w") || newDirection.equals("a")
                 || newDirection.equals("s") || newDirection.equals("d");
+    }
+    private void checkGameOver(int headX , int headY){
+        if (headX < 0 || headX >= width || headY < 0 || headY >= height || containsPositionInBoard(headX, headY)) {
+            System.out.println("Game Over!");
+            SnakeGame.isRunning = false;
+            System.exit(0);
+        }
+    }
+
+    private void updateSnakeBody(){
+        for (int i = length - 1; i > 0; i--) {
+            BodyPart currentPart = body.get(i);
+            BodyPart previousPart = body.get(i - 1);
+            currentPart.setX(previousPart.getX());
+            currentPart.setY(previousPart.getY());
+        }
+    }
+
+    private void updateSnakeHead(int headX , int headY){
+        body.get(0).setX(headX);
+        body.get(0).setY(headY);
     }
 }

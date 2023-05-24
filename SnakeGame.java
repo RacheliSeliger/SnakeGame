@@ -33,14 +33,14 @@ public class SnakeGame {
             String input = board.readKeyInput();
             sleep(400);
             if (input.equals("q")) {
-                System.out.println("Game Over!");
-                isRunning = false;
-                System.exit(0);
+                gameOver();
             }
             if (snake.isValidDirection(input)) {
                 snake.setDirection(input);
             }
+
             snake.move();
+
             if (snake.collidesWith(food)) {
                 snake.updateEatenFood();
                 increaseScore(10);
@@ -53,6 +53,11 @@ public class SnakeGame {
 
     }
 
+    private void gameOver(){
+        System.out.println("Game Over!");
+        isRunning = false;
+        System.exit(0);
+    }
     private void increaseScore(int points) {
         score += points;
     }
